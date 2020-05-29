@@ -1,15 +1,17 @@
 import React from 'react'
-import { NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import moment from 'moment'
+import numeral from "numeral";
 
 
 
- const ExpenseListItem = (props) => (
+ const ExpenseListItem = ({id, description, amount , createdAt}) => (
 
         <div>
-        <NavLink to="/" activeClassName="is-active" exact to={`/edit/${props.id}`}><p>{props.description}</p></NavLink>
+        <NavLink to="/" activeClassName="is-active" exact to={`/edit/${id}`}><p>{description}</p></NavLink>
             
-            <p>{props.amount}</p>
-         <p>{props.createdAt}</p>
+            <p>{numeral(amount/100).format('$0,0.00')}</p>
+         <p>{moment(createdAt).format('Do MMMM, YYYY')}</p>
          
         </div>
 
