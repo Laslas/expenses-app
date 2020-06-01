@@ -8,7 +8,7 @@ import { setTextFilter } from './actions/filters'
 import getVisibleExpenses from './selectors/expenses'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
-//import Redux102 from './new/Redux-expensify'
+import './firebase/firebase'
 
 
 const store = configureStore()

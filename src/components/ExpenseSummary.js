@@ -5,23 +5,27 @@ import selectExpensesTotal from '../selectors/expenses-total'
 import selectExpenses from '../selectors/expenses'
 
 
-const ExpenseSummary = (props) => {
+const ExpenseSummary = ({count, total}) => {
     
-    let total = selectExpensesTotal(props.expenses)
-    let count = props.expenses.length
+    
     const plu = count === 1 ? '' : 's'
     
     return (
         <div>
-        {count < 1 ? '' : <p>{`You are viewing ${count} expense${plu} totalling `}{numeral(total/100).format('$0,0.00')}</p>}           
+         <h1>{`You are viewing ${count} expense${plu} totalling `}{numeral(total/100).format('$0,0.00')}</h1>          
            
         </div>
     )
 }
 
-const MapStateToProps = (state) => ({
-    expenses:selectExpenses(state.expenses, state.filters)
+const MapStateToProps = (state) => {
+    const visibleExpenses = selectExpenses(state.expenses, state.filters)
+    
+    return {
+        total: selectExpensesTotal(visibleExpenses),
+        count:visibleExpenses.length
+    }
 
-})
+}
 
 export default connect(MapStateToProps)(ExpenseSummary)
