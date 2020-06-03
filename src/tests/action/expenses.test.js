@@ -6,7 +6,8 @@ import {
     editExpense,
     removeExpense,
     setExpenses,
-    startSetExpenses
+    startSetExpenses,
+    startRemoveExpense
 } from '../../actions/expenses'
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase'
@@ -22,7 +23,6 @@ beforeEach((done) => {
     })
     database.ref('expenses').set(expenseData).then(()=> done())
 })
-
 test('sets up remove expense action object', () => {
     const action = removeExpense({
         id: '45rt'
@@ -30,6 +30,23 @@ test('sets up remove expense action object', () => {
     expect(action).toEqual({
         type: 'REMOVE_EXPENSE',
         id: '45rt'
+    })
+})
+//done() used for asynchronous functions
+
+test('should remove expense from firebase', (done) => {
+    const store = createMockStore({})
+    const id = expenses[2].id
+    store.dispatch(startRemoveExpense({ id })).then(() => {
+        const actions = store.getActions()
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_EXPENSE',
+            id
+        })
+        return database.ref('expenses/${id}').once('value')
+    }).then(() => {
+        expect(snapshot.val()).toBeFalsy()
+        done()
     })
 })
 
