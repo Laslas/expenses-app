@@ -6,7 +6,7 @@ import configureStore from './stores/configureStore'
 import { startSetExpenses } from './actions/expenses'
 import { login, logout} from './actions/auth'
 import getVisibleExpenses from './selectors/expenses'
-import LoginPage from './components/LoginPage'
+import LoadingPage from './components/LoadingPage'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
 import {firebase } from './firebase/firebase'
@@ -30,7 +30,7 @@ const renderApp = () => {
     }
 }
 
-ReactDOM.render(<p>loading...</p>, document.getElementById('app'))
+ReactDOM.render(<LoadingPage />, document.getElementById('app'))
 
  
 
